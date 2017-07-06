@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+     <title>Space Invaders</title>
+     <style>
+     canvas{
+
+          background-color: #000;
+          display: block;
+          position: absolute;
+          margin: auto;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+     }
+     </style>
+</head>
+<body>
+
+<script src="js/index.js"></script>
+<script type="text/javascript">
+var screen, input, frames;
+var alSprite, taSprite, ciSprite;
+var aliens, dir, tank, bullets, cities;
+
+function main(){
+     screen = new Screen(510, 600);
+     input = new InputHandeler();
+
+     var img = new Image();
+     img.addEventListener("load", function(){
+          alSprite = [
+               [new Sprite(this, 0, 0, 22, 16), new Sprite(this, 0, 16, 22, 16)],
+               [new Sprite(this, 22, 0, 16, 16), new Sprite(this, 22, 16, 16, 16)],
+               [new Sprite(this, 38, 0, 24, 16), new Sprite(this, 38, 0, 16, 24, 16)]
+          ];
+          taSprite = new Sprite(this, 62, 0, 22, 16);
+          ciSprite = new Sprite(this, 84, 8, 36, 24);
+
+          init();
+          run();
+     });
+     img.src = "http://i.imgur.com/js5FWbD.png"
+};
+
+function init(){};
+function run(){
+     var loop = function(){
+          update();
+          render();
+
+          window.requestAnimationFrame(loop, screen.canvas);
+     };
+     window.requestAnimationFrame(loop, screen.canvas);
+};
+function update(){};
+function render(){
+     screen.drawSprite(ciSprite, 10, 10);
+};
+main();
+</script>
+</body>
+</html>
