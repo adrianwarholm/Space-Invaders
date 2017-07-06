@@ -5,6 +5,25 @@
 
 //Helper functions
 
+function AABBIntersect(ax, ay, aw, ah, bx, by, bw, bh){
+     return ax < bx + bw && bx < ax + aw && ay < by+bh && by < ay + ah;
+}
+
+
+//Bullet
+function Bullet(x,y,vely,w,h,color){
+     this.x = x;
+     this.y = y;
+     this.vely = vely;
+     this.width = w;
+     this.height = h;
+     this.color = color;
+};
+
+Bullet.prototype.update = function(){
+     this.y += this.vely;
+}
+
 //Screen
 
 function Screen(width, height){
@@ -23,6 +42,11 @@ Screen.prototype.drawSprite = function(sp, x, y){
      this.ctx.drawImage(sp.img, sp.x, sp.y, sp.w, sp.h, x, y, sp.w, sp.h);
 };
 
+Screen.prototype.drawBullet = function(bullet){
+     this.ctx.fillStyle = bullet.color;
+     this.ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
+}
+
 //Sprite
 function Sprite(img, x, y, w, h){
      this.img = img;
@@ -40,21 +64,21 @@ function InputHandeler(){
      document.addEventListener("keydown", function(event){
           _this.down[event.keyCode] = true;
      });
-     document.addEventListener("keyip", function(event){
+     document.addEventListener("keyup", function(event){
           delete _this.down[event.keyCode];
           delete _this.pressed[event.keyCode];
      });
 };
 
 InputHandeler.prototype.isDown = function(keyCode){
-     return this.down[code];
+     return this.down[keyCode];
 };
 
 InputHandeler.prototype.isPressed = function(keyCode){
      if(this.pressed[keyCode]){
           return false;
      } else if (this.down[keyCode]){
-          return this.pressed[code] = true;
+          return this.pressed[keyCode] = true;
      }
      return false;
 };
